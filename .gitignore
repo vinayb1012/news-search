@@ -1,0 +1,6 @@
+# created by virtualenv automatically
+venv/
+lib
+node_modules
+
+
