@@ -1,4 +1,4 @@
-import { Box, IconButton, Menu, Snackbar } from "@mui/material";
+import { Box, IconButton, Menu } from "@mui/material";
 import LanguageTwoToneIcon from "@mui/icons-material/LanguageTwoTone";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,6 +8,7 @@ import Check from "@mui/icons-material/Check";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { changeLanguage } from "../redux/slices/newsSlice";
+import { showNotification } from "../redux/slices/notificationSlice";
 
 const languages = [
   {
@@ -47,6 +48,13 @@ export default function LanguageSettings() {
 
   const handleLanguageChange = (language: string) => {
     dispatch(changeLanguage(language));
+    dispatch(
+      showNotification({
+        messageType: "success",
+        message: `Language changed to ${language}`,
+        open: true,
+      })
+    );
     handleClose();
   };
   return (

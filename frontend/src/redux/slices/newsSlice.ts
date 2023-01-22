@@ -42,7 +42,10 @@ export const fetchNews = createAsyncThunk(
       .get(
         `http://localhost:5000/api/news?query=${query}&language=${state.news.language}`
       )
-      .then((response) => response.data)
+      .then((response) => {
+        return response.data;
+      })
+
       .catch((error) => rejectWithValue(error.response.data));
   }
 );
@@ -80,13 +83,12 @@ export const newsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchNews.pending, (state) => {});
     builder.addCase(fetchNews.fulfilled, (state, action) => {
       state.news = action.payload;
       state.currentPage = 0;
       state.news.forEach((news) => {
         // Remove html tags from description
-        news.description = news.description.replace(/(<([^>]+)>)/gi, "");
+        news.description = news.description?.replace(/(<([^>]+)>)/gi, "");
         news.metadata = {
           id: uuidv4(),
           isFavorite: false,

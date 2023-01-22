@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { newsReducer } from "./slices/newsSlice";
+import { notificationReducer } from "./slices/notificationSlice";
 
 export const store = configureStore({
   reducer: {
     news: newsReducer,
+    notification: notificationReducer,
   },
 });
 

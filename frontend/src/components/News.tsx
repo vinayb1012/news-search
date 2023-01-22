@@ -1,4 +1,4 @@
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { NewsType } from "../redux/slices/newsSlice";
 import NewsItem from "./NewsItem";
 
@@ -8,6 +8,9 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabPanel from "./layout/TabPanel";
 import PaginatedItems from "./PaginatedSearchResults";
+import { Snackbar } from "@mui/material";
+import { Alert } from "./Alert";
+import { closeNotification } from "../redux/slices/notificationSlice";
 
 function a11yProps(index: number) {
   return {
@@ -15,10 +18,15 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
 export default function News() {
   const news = useAppSelector((state) => state.news.news);
   const favorites = useAppSelector((state) => state.news.favorites);
+
+  const { messageType, message, open } = useAppSelector(
+    (state) => state.notification
+  );
+
+  const dispatch = useAppDispatch();
 
   const [value, setValue] = React.useState(0);
 
@@ -46,6 +54,16 @@ export default function News() {
           );
         })}
       </TabPanel>
+
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={() => dispatch(closeNotification())}
+      >
+        <Alert severity={messageType} sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

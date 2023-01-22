@@ -2,13 +2,13 @@ import os
 
 import requests as requests
 from flask import Flask, request, send_from_directory, jsonify
-from flask_cors import CORS  # comment this on deployment
+from flask_cors import CORS
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/dist')
-CORS(app)  # comment this on deployment
+CORS(app)
 
 NEWSAPI_URL = "https://newsapi.org/v2/everything?"
 
