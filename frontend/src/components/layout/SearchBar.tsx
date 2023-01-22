@@ -14,6 +14,16 @@ import { useAppDispatch } from "../../redux/hooks";
 import { fetchNews } from "../../redux/slices/newsSlice";
 import LanguageSettings from "../LanguageSettings";
 
+const styles = {
+  search: {
+    width: {
+      xs: "100%",
+      sm: "80%",
+      md: "60%",
+    },
+    borderRadius: "60px",
+  },
+};
 export default function SearchBar() {
   const [searchText, setSearchText] = useState("");
   const dispatch = useAppDispatch();
@@ -34,7 +44,7 @@ export default function SearchBar() {
             handleSearch();
           }
         }}
-        sx={{ width: "60%", borderRadius: "60px" }}
+        sx={styles.search}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

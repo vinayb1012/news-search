@@ -2,18 +2,28 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 
+const styles = {
+  appBar: {
+    bgcolor: "#050f29",
+  },
+};
 export default function CustomAppBar() {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <>
-      <AppBar position="fixed" sx={{ bgcolor: "#050f29" }}>
+    <Box>
+      <AppBar position="fixed" sx={styles.appBar}>
         <Toolbar>
           <Typography
-            variant="h3"
+            variant={matches ? "h6" : "h4"}
             noWrap
             component="div"
             sx={{
-              display: { alignContent: "center" },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             HEADLINE HUNTER
@@ -21,6 +31,6 @@ export default function CustomAppBar() {
         </Toolbar>
       </AppBar>
       <Toolbar />
-    </>
+    </Box>
   );
 }

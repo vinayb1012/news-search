@@ -11,10 +11,8 @@ import {
   CardHeader,
   CardMedia,
   IconButton,
-  IconButtonProps,
   Link,
   Modal,
-  styled,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -25,44 +23,62 @@ import { useAppDispatch } from "../redux/hooks";
 import SocialMediaShare from "./SocialMediaShare";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 type NewsItemProps = {
   item: NewsType;
 };
 
 const styles = {
-  card: { width: "50%", height: "20%", margin: "20px", padding: "30px" },
-
-  media: {
+  card: {
+    width: {
+      xs: "80%",
+      sm: "60%",
+      md: "50%",
+    },
     height: "20%",
-    width: "20%",
+    margin: "20px",
+    padding: "30px",
   },
-};
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "60%",
-  height: "80%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+  cardContent: {
+    display: {
+      xs: "none",
+      md: "block",
+    },
+  },
+  cardMedia: {
+    height: {
+      xs: "20%",
+      md: "20%",
+    },
+  },
+
+  cardHeader: {
+    // font size for xs
+    fontSize: {
+      xs: "0.5rem",
+      md: "1.5rem",
+    },
+  },
+  media: {
+    // width: "50%",
+    width: {
+      xs: "100%",
+      md: "80%",
+    },
+  },
+
+  iframe: {
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "60%",
+    height: "80%",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  },
 };
 
 export default function NewsItem({ item }: NewsItemProps) {
@@ -92,6 +108,7 @@ export default function NewsItem({ item }: NewsItemProps) {
           subheader={`${item.source.name} - ${new Date(
             item.publishedAt
           ).toLocaleDateString()}`}
+          sx={styles.cardHeader}
         />
       </Link>
 
@@ -104,7 +121,7 @@ export default function NewsItem({ item }: NewsItemProps) {
         />
       )}
 
-      <CardContent>
+      <CardContent sx={styles.cardContent}>
         <Typography variant="body2" color="text.secondary">
           {item.description}
         </Typography>
@@ -131,7 +148,7 @@ export default function NewsItem({ item }: NewsItemProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={styles.iframe}>
           <iframe src={item.url} width="100%" height="100%" title={item.url} />
         </Box>
       </Modal>
