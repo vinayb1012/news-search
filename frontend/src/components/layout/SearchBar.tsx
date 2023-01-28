@@ -32,7 +32,9 @@ export default function SearchBar() {
   };
 
   const handleSearch = () => {
-    dispatch(fetchNews(searchText));
+    if (searchText !== "") {
+      dispatch(fetchNews(searchText));
+    }
   };
   return (
     <Box>
